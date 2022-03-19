@@ -1,10 +1,10 @@
-## ISO Builder
+## VibinOS
 
-This ISO builder is fork of the good work from the elementary crew.  Many thanks to the devs there https://github.com/elementary/os
+This distro is made with the amazing tool called iso-builder made by the Ubuntu Budgie team, it is intended to look and feel like Windows 95. Giving that sort of webcore aesthetic feeling.
 
 ## Building Locally
 
-As ubuntu cinnamon-remix is built with the Debian version of `live-build`, not the Ubuntu patched version, it's easiest to build an iso in a Debian VM or container. This prevents messing up your host system too.
+As ubuntu VibinOS is built with the Debian version of `live-build`, not the Ubuntu patched version, it's easiest to build an iso in a Debian VM or container. This prevents messing up your host system too.
 
 The following example uses Docker and assumes you have Docker correctly installed and set up:
 
@@ -107,7 +107,5 @@ To stop a docker container when running
 ## Further Information
 
 More information about the concepts behind `live-build` and the technical decisions made to arrive at this set of tools to build an .iso can be found [on the wiki](https://github.com/elementary/os/wiki/Building-iso-Images).
-# VibinOS
-# VibinOS
-# VibinOS
-# VibinOS
+
+### With love from her friends to Yua
