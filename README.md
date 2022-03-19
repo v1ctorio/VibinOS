@@ -108,4 +108,4 @@ To stop a docker container when running
 
 More information about the concepts behind `live-build` and the technical decisions made to arrive at this set of tools to build an .iso can be found [on the wiki](https://github.com/elementary/os/wiki/Building-iso-Images).
 
-### With love from her friends to Yua
+#### Made with love and patience, Yua 4 da win!!!!
