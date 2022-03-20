@@ -8,99 +8,96 @@ As VibinOS is built with the Debian version of `live-build`, not the Ubuntu patc
 
 The following example uses Docker and assumes you have Docker correctly installed and set up:
 
- 1) sudo apt install docker.io
+ 1. `sudo apt install docker.io`
 
- 2) sudo docker pull debian
+ 1. `sudo docker pull debian`
 
- 3) Customise the docker image to have the ability to build eoan/focal
+ 1. Customise the docker image to have the ability to build eoan/focal
 
-    sudo docker run --privileged -it debian:latest
+    `sudo docker run --privileged -it debian:latest`
 
     note the containerID in the root prompt i.e. /# means you are now in the container
     
     e.g. root@ea5126f14ac9:/#
 
-    Install git and nano
+  1. Install git and nano
 
-    apt update && apt install git nano -y
+     `apt update && apt install git nano -y`
 
-    Clone the iso-builder
-
-    mkdir /home/cinnamonremix
+  1. Clone the iso-builder
+     ```bash
+     mkdir /home/cinnamonremix
     
-    cd /home/cinnamonremix
+     cd /home/cinnamonremix
     
-    git clone https://github.com/ubuntubudgie/iso-builder
+     git clone https://github.com/ubuntubudgie/iso-builder
     
-    cd iso-builder
+     cd iso-builder
+     ```
+     at this point configure etc/terraform.conf for the build you wish to make e.g. 21.10 and impish - ensure you decide between unstable or all PPAs
+
+  1. also edit build.sh and change the symbolic link codename if necessary to match terraform.conf
     
-    at this point configure etc/terraform.conf for the build you wish to make e.g. 21.10 and impish - ensure you decide between unstable or all PPAs
+  1. now run
 
-    also edit build.sh and change the symbolic link codename if necessary to match terraform.conf
+     `./build.sh`
+
+     This will eventually complete - ignore any errors EXCEPT for 404 repository errors.  If you get those then investigate why and once fixed exit and start the      instructions again.  This step will take 20-60 minutes depending on your internet speed and host OS CPU power
+
+  1. exit the container and commit the results
+
+     `exit`
     
-    now run
-
-    ./build.sh
-
-    This will eventually complete - ignore any errors EXCEPT for 404 repository errors.  If you get those then investigate why and once fixed exit and start the instructions again.  This step will take 20-60 minutes depending on your internet speed and host OS CPU power
-
-    exit the container and commit the results
-
-    exit
+     You will now be back on your host OS
     
-    You will now be back on your host OS
+     `sudo docker commit containerID`
     
-    sudo docker commit containerID 
-    
-    e.g.   sudo docker commit ea5126f14ac9
+     e.g.   `sudo docker commit ea5126f14ac9`
 
-    Stop the docker container (important step)
+   1. Stop the docker container (important step)
 
-    sudo docker stop ea5126f14ac9
+      `sudo docker stop ea5126f14ac9`
 
+   1. Run the build by starting a container:
 
+      ```bash
+      sudo docker start -i ea5126f14ac9
+      # You will now be back in the container i.e. with a /# prompt
+      cd /home/cinnamonremix/iso-builder
+      ./terraform.sh
+      ```
+      
+      This will take approx 20-60 minutes but will depend on your host OS CPU power and internet speed
 
- 3) Run the build by starting a container:
+      1. When done, your image will be in the builds folder.
 
-    sudo docker start -i ea5126f14ac9
-    
-    You will now be back in the container i.e. with a /# prompt
+       On your host, copy the build folder from your docker container
 
-    cd /home/cinnamonremix/iso-builder
+       `sudo docker cp containerID:/home/cinnamonremix/iso-builder/builds/amd64` .
 
-    ./terraform.sh
-    
-    This will take approx 20-60 minutes but will depend on your host OS CPU power and internet speed
+        Finish by shutting down the container
 
- 4) When done, your image will be in the builds folder.
-
-    On your host, copy the build folder from your docker container
-
-    sudo docker cp containerID:/home/cinnamonremix/iso-builder/builds/amd64 .
-
-    Finish by shutting down the container
-
-    sudo docker stop containerID
+        `sudo docker stop containerID`
 
 ## Docker hints
 
 To see the list of docker containers
 
-    sudo docker ps -a
+    `sudo docker ps -a`
 
 To remove a docker container using the Container ID listed with the above command
 
-    sudo docker rm containerid
+    `sudo docker rm containerid`
     
 To remove a docker image
 
-    sudo docker images
+    `sudo docker images`
     
-    sudo docker rmi imageID
+    `sudo docker rmi imageID`
 
 To stop a docker container when running
 
-    sudo docker stop containerid
+    `sudo docker stop containerid`
 
 
 
